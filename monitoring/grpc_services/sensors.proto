@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package gas_sensor;
+
+service Monitoring {
+  rpc GasData(DataRequest) returns (DataResponse) {}
+}
+
+message DataRequest {}
+
+message DataResponse {
+  string sensor_id = 1;
+  string gas_type = 2;
+  float value = 3;
+  string timestamp = 4;
+}
