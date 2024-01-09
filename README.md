@@ -18,17 +18,29 @@ In a real-world scenario, you can enhance this workflow by integrating additiona
 
 ## Run the project
 
-After cloning the project and installing dependencies based on **requirements.txt**, you need to run 3 modules in serrate terminals: Sensors, Station app, and Monitoring app:
+After cloning the project and installing dependencies based on **requirements.txt**, it's time to kick off the project! 🚀    
+
+First, let's get the station section ready. Navigate to the related folder and follow these commands:
 
 ```bash
-# in first terminal:
 cd station
-python -m app
+```
 
-# in second terminal:
+```bash
+# Start the RabbitMQ service:
+docker-compose up -d
+
+# Activate the sensors:
 python -m sensors
 
-# in third terminal:
+# Open a new terminal and run the station gateway:
+python -m app
+```
+
+Once the station is all set up, we can move on to the monitoring section and begin its service to fetch data:
+
+
+```bash
 cd monitoring
 python -m app
 ```
@@ -36,3 +48,24 @@ python -m app
 ![execute](docs/execute.png)
 
 <br>
+
+## More detail
+
+As it's clear, we utilized the gRPC package to establish communication between our two microservices. You can customize the data fields by making changes to the **sensors.proto** file. After each modification, you should rebuild the **sensors_pb2_grpc.py** and **sensors_pb2.py** using the following command. 
+
+```bash
+cd station/grpc_services
+python -m grpc_tools.protoc -I=. --python_out=. --grpc_python_out=. ./sensors.proto
+```
+
+One more round! Due to the project's folder structure, after rebuilding, make sure to update the code in the **sensors_pb2_grpc.py** file to the suggested one:
+
+```python
+# change this
+import sensors_pb2, sensors_pb2_grpc
+
+# to this
+from . import sensors_pb2, sensors_pb2_grpc
+```
+
+Please make sure that these three files are also copied to **monitoring/grpc_services** after the rebuild. 
