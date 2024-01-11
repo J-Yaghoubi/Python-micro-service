@@ -12,6 +12,8 @@ n the picture below, you can see that we have three sensors sending their data t
 
 In a real-world scenario, you can enhance this workflow by integrating additional components such as time-series databases, various communication protocols, etc., in order to meet the project requirements.
 
+<br>
+
 ![diagram](docs/diagram.png)
 
 <br>
